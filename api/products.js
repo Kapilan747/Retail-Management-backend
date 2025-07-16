@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
   await connectToDatabase();
   const { method, query, body } = req;
 
-  // GET /api/products or /api/products?id=...
   if (method === 'GET') {
     if (query.id) {
       const product = await Product.findById(query.id);
@@ -16,14 +15,12 @@ module.exports = async (req, res) => {
     return res.json(products);
   }
 
-  // POST /api/products
   if (method === 'POST') {
     const product = new Product(body);
     await product.save();
     return res.status(201).json(product);
   }
 
-  // PUT /api/products?id=...
   if (method === 'PUT') {
     if (!query.id) return res.status(400).json({ error: 'Missing id' });
     const product = await Product.findByIdAndUpdate(query.id, body, { new: true });
@@ -31,7 +28,6 @@ module.exports = async (req, res) => {
     return res.json(product);
   }
 
-  // DELETE /api/products?id=...
   if (method === 'DELETE') {
     if (!query.id) return res.status(400).json({ error: 'Missing id' });
     await Product.findByIdAndDelete(query.id);

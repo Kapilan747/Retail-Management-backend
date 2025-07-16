@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
   await connectToDatabase();
   const { method, query, body } = req;
 
-  // GET /api/sales or /api/sales?id=...
   if (method === 'GET') {
     if (query.id) {
       const sale = await Sale.findById(query.id);
@@ -16,7 +15,6 @@ module.exports = async (req, res) => {
     return res.json(sales);
   }
 
-  // POST /api/sales
   if (method === 'POST') {
     const sale = new Sale(body);
     await sale.save();
