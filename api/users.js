@@ -2,6 +2,13 @@ const User = require('../models/User');
 const connectToDatabase = require('../utils/connectToDatabase');
 
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://retail-management-frontend.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
   await connectToDatabase();
   const { method, query, body } = req;
 
