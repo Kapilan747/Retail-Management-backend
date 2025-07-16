@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
       if (!user) return res.status(404).json({ error: 'Not found' });
       const userObj = user.toObject();
       userObj.id = userObj._id.toString();
+      delete userObj.password;
       return res.json(userObj);
     }
     if (query.username && query.password) {
@@ -19,6 +20,7 @@ module.exports = async (req, res) => {
       if (user) {
         const userObj = user.toObject();
         userObj.id = userObj._id.toString();
+        delete userObj.password;
         return res.json([userObj]);
       }
       return res.json([]);
@@ -27,6 +29,7 @@ module.exports = async (req, res) => {
     const usersWithId = users.map(u => {
       const obj = u.toObject();
       obj.id = obj._id.toString();
+      delete obj.password;
       return obj;
     });
     return res.json(usersWithId);
@@ -38,6 +41,7 @@ module.exports = async (req, res) => {
     await user.save();
     const userObj = user.toObject();
     userObj.id = userObj._id.toString();
+    delete userObj.password;
     return res.status(201).json(userObj);
   }
 
@@ -48,6 +52,7 @@ module.exports = async (req, res) => {
     if (!user) return res.status(404).json({ error: 'Not found' });
     const userObj = user.toObject();
     userObj.id = userObj._id.toString();
+    delete userObj.password;
     return res.json(userObj);
   }
 
